@@ -4,12 +4,13 @@ from niapy.task import Task
 
 
 def to_latex(df, filename=None, caption=None, label=None):
+    functions = ['$f_{{{}}}$'.format(i + 1) for i in range(df.index.levshape[0])]
+    df.index = df.index.set_levels(functions, 0)
     return df.to_latex(buf=filename, bold_rows=True, column_format='llcccc', multirow=True, escape='', longtable=True,
                        label=label, caption=caption)
 
 
 def run(algorithms, problems, runs=25, dim=2, max_iters=1000):
-    # functions = ['$f_{{{}}}$'.format(i + 1) for i in range(len(problems))]
     iterables = [problems, ['Min', 'Max', 'Avg', 'Std']]
     index = pd.MultiIndex.from_product(iterables, names=['Fukcija', ''])
     columns = [algorithm.Name[1] for algorithm in algorithms]
