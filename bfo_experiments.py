@@ -12,7 +12,7 @@ def to_latex(df, filename=None, caption=None, label=None):
 
 def run(algorithms, problems, runs=25, dim=2, max_iters=1000):
     iterables = [problems, ['Min', 'Max', 'Avg', 'Std']]
-    index = pd.MultiIndex.from_product(iterables, names=['Fukcija', ''])
+    index = pd.MultiIndex.from_product(iterables, names=['Function', ''])
     columns = [algorithm.Name[1] for algorithm in algorithms]
     df = pd.DataFrame(np.zeros((len(problems) * len(algorithms), len(algorithms))), index=index, columns=columns)
 
