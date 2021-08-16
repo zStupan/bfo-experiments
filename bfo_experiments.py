@@ -14,11 +14,21 @@ def run(algorithms, problems, runs=25, dim=2, max_iters=1000):
     index = pd.MultiIndex.from_product(iterables, names=['Fukcija', ''])
     columns = [algorithm.Name[1] for algorithm in algorithms]
     df = pd.DataFrame(np.zeros((len(problems) * len(algorithms), len(algorithms))), index=index, columns=columns)
+
+    ranges = {
+        'sphere': (-5.12, 5.12),
+        'rosenbrock': (-2.048, 2.048),
+        'rastrigin': (-5.12, 5.12),
+        'griewank': (-600, 600),
+        'ackley': (-32.768, 32.768),
+    }
+
     for problem in problems:
+        lower, upper = ranges[problem]
         for algorithm in algorithms:
             fitness = []
             for i in range(runs):
-                task = Task(problem, dimension=dim, max_iters=max_iters)
+                task = Task(problem, dimension=dim, lower=lower, upper=upper, max_iters=max_iters)
                 _, best_fitness = algorithm.run(task)
                 fitness.append(best_fitness)
             df[algorithm.Name[1]][problem] = (np.min(fitness), np.max(fitness), np.mean(fitness), np.std(fitness))
