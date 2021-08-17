@@ -5,7 +5,7 @@ from niapy.task import Task
 
 def to_latex(df, filename=None, caption=None, label=None):
     functions = ['$f_{{{}}}$'.format(i + 1) for i in range(df.index.levshape[0])]
-    df.index = df.index.set_levels(functions, 0)
+    df.index = df.index.set_levels(functions, level=0)
     return df.to_latex(buf=filename, bold_rows=True, column_format='llcccc', multirow=True, escape='', longtable=True,
                        label=label, caption=caption)
 
