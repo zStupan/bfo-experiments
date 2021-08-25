@@ -12,7 +12,7 @@ from niapy.algorithms.basic.de import cross_rand1
 
 
 def to_latex(df, filename=None, caption=None, label=None):
-    return df.to_latex(buf=filename, bold_rows=True, column_format='llcccc', multirow=True, escape='', longtable=True,
+    return df.to_latex(buf=filename, bold_rows=True, column_format='llcccc', multirow=True, longtable=True,
                        label=label, caption=caption)
 
 
@@ -57,15 +57,12 @@ if __name__ == '__main__':
     bfo_10d = BacterialForagingOptimization(population_size=100, n_chemotactic=1000, n_reproduction=5, seed=12345)
     bfo_20d = BacterialForagingOptimization(population_size=100, n_chemotactic=2000, n_reproduction=5, seed=12345)
     bfo_30d = BacterialForagingOptimization(population_size=100, n_chemotactic=3000, n_reproduction=5, seed=12345)
-    bfo_50d = BacterialForagingOptimization(population_size=100, n_chemotactic=5000, n_reproduction=5, seed=12345)
-    bfo_100d = BacterialForagingOptimization(population_size=100, n_chemotactic=10000, n_reproduction=5, seed=12345)
 
-    dims = [10, 20, 30, 50, 100]
-    iters = [10000, 20000, 30000, 50000, 100000]
-    algorithms = [(bfo_10d, de, pso, ba), (bfo_20d, de, pso, ba), (bfo_30d, de, pso, ba), (bfo_50d, de, pso, ba),
-                  (bfo_100d, de, pso, ba)]
+    dims = [10, 20, 30]
+    iters = [10000, 20000, 30000]
+    algorithms = [(bfo_10d, de, pso, ba), (bfo_20d, de, pso, ba), (bfo_30d, de, pso, ba)]
 
-    processes = [mp.Process(target=run, args=(algorithms[i], problems, 25, dims[i], iters[i])) for i in range(5)]
+    processes = [mp.Process(target=run, args=(algorithms[i], problems, 25, dims[i], iters[i])) for i in range(3)]
     for p in processes:
         p.start()
     for p in processes:
